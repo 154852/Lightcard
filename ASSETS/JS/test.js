@@ -37,7 +37,7 @@ function getNonNoiseWords(text) {
     text = text.replaceAll(/\.|,|\?|!/, '');
 
     const words = text.split(' ');
-    const defaultNoise = ['and', 'if', 'so', 'or', 'this', 'is', 'that', 'are', 'what', 'a', 'its', 'as', 'it', 'to', 'by', 'of', 'there', 'they', 'does', 'an', 'like', 'who', 'which', 'when', 'why'];
+    const defaultNoise = ['and', 'if', 'so', 'or', 'this', 'is', 'that', 'are', 'what', 'a', 'its', 'as', 'it', 'to', 'by', 'of', 'there', 'they', 'does', 'an', 'like', 'who', 'which', 'when', 'why', 'for', 'on', 'at'];
 
     const end = [];
 

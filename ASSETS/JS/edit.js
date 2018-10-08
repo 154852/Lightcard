@@ -33,10 +33,13 @@ function refreshVisual() {
     document.getElementsByName('desc')[0].innerText = deck.description;
 }
 
-const saveButton = editElement.querySelector('#save-button')
+const saveButton = editElement.querySelector('#save-button');
+const enterEvent = function(event) {
+    if (event.keyCode == 13) saveButton.click();
+};
+
 const editCallback = function(card) {
     editElement.setAttribute('style', '');
-
     
     saveButton.onclick = function() {
         save(card);
@@ -44,6 +47,9 @@ const editCallback = function(card) {
 
         refreshVisual();
     };
+
+    document.removeEventListener('keyup', enterEvent);
+    document.addEventListener('keyup', enterEvent);
 
     document.getElementsByName('side1')[0].value = card.a;
 
