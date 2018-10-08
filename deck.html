@@ -22,7 +22,7 @@
             <p name="desc" class="center-text">Put a summary of the deck here - something that just tells your audience what they can expect</p>
 
             <div class="eq-grid">
-                <div class="block-button button" onclick="javascipt:prompt('Your Key:', 'https://' + window.location.host + '/import.html?code=' + APP.genCodeForDeck(deck))" style="width: 60%">Export</div>
+                <div class="block-button button" onclick="window.open('mailto:someone@example.org?subject=Lightcard&body=Check out my lightcard deck: https://lightcard.netlify.com/import?code=' + encodeURIComponent(APP.genCodeForDeck(deck)), '_self')" style="width: 60%">Export</div>
                 <div class="block-button button" id="set-test" style="width: 90%">Set Test</div>
                 <div class="block-button button" onclick="javascript:window.open('qr.html?i=' + deck.id, '_self')" style="width: 60%">Export As QR Code</div>
             </div>

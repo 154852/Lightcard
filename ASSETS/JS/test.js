@@ -44,7 +44,7 @@ function getNonNoiseWords(text) {
     for (var i = 0; i < words.length; i++) {
         if (words[i].startsWith('+') && words[i].endsWith('+')) {
             end.push(words[i].substring(1, words[i].length - 1).replaceAll('_', ' '));
-        } else if (!((words[i].startsWith('-') && words[i].endsWith('-')) || defaultNoise.indexOf(words[i]) != -1)) {
+        } else if (!((words[i].startsWith('-') && words[i].endsWith('-')) || defaultNoise.indexOf(words[i].toLowerCase()) != -1)) {
             end.push(words[i].replaceAll('_', ' '));
         }
     }
