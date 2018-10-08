@@ -33,6 +33,7 @@ APP.loadAllDecksByDate = function() {
 
 APP.insertDeck = function(data) {
     const array = APP.loadAllDecks();
+    data.id = array.length;
     array.push(data);
     localStorage.decks = JSON.stringify(array);
 
