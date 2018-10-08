@@ -49,6 +49,7 @@ APP.createCard = function(type, a, b) {
 
 APP.genCodeForDeck = function(deck) {
     deck = JSON.parse(JSON.stringify(deck));
+    deck.id = undefined;
     
     const cards = [];
     for (const card of deck.cards) {
