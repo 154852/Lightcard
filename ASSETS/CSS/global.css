@@ -74,6 +74,7 @@ input[type="text"], .editable {
 input[type="text"] {
     font-family: inherit;
     font-size: inherit;
+    -webkit-appearance: none;
 }
 
 input[type="text"]:focus, .editable:focus {

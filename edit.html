@@ -55,29 +55,24 @@
             <h3 class="center-text">How to make you card work well with our markdown-ish thing:</h3>
             <ol>
                 <li>
-                    <b>What is really important and <em>must</em> be exactly (minus capitalisation) as in the given answer</b> can be marked like <code>*<em>something</em>*</code>. This means that if you were to say that <code>*Uno*</code> matches <code>*One*</code> then <code>uno = one, UnO = ONe, Uno != ones, auno != one</code>
+                    We use a kind of noise cancellation where small - seemingly insignificant words such as <code>it</code> <code>and</code> and even <code>and</code>. These words will basically be ignored, we will not ask a question regarding them.
                 </li>
                 <br />
                 <li>
-                    <b>Numbers that can be written as a string or as a number</b> can be expressed as <code>-something-</code> for example if <code>Uno</code> is <code>*1*</code> then <code>uno = one, uno = 1, uno != 2, uno != two</code>
+                    <b>If there is a word we <em>don't</em> cancel, but should be removed</b> you can surround word like so: <code>this is -unimportant-</code>
                 </li>
                 <br />
                 <li>
-                    <b>Several things that could be included for it to be correct</b> are shown with <code>[thing1, thing2, thing3]</code> for example if <code>A unit for distance</code> is <code>[cm,m,km,miles,centimetres,metres,mm,milimeters,kilometres]</code> then <code>A unit for distance = cm, A unit for distance = metres, A unit for distance != nothing</code>
+                    <b>If there is a word we cancel, but it as actually important</b> you can surround word like so: <code>+these+ +are+ actuall important</code>
                 </li>
                 <br />
                 <li>
-                    <b>Things that are not that important</b> can donoted as <code>^something^</code>, for example if <code>Who is existent</code> is <code>^the^ government</code> then <code>Who is existent = the government, Who is existent = government, Who is existent != the, Who is existent != anything else</code>
-                </li>
-                <br />
-                <li>
-                    <b>Several things that <em>have</em> to be there</b> are shown as <code>{thing1, thing2, thing3}</code>, for example if <code>What are humans</code> is <code>{mammal, species, intelligent}</code> then <code>What are humans = An intelligent species of the mammal family, What are humans != mammals, What are humans != A mammal species</code>
-                </li>
-                <br />
-                <li>
-                    <b>You can also use several at once!</b> For example you could write <code>[{-1-, cm}, {-1000-, mm}]</code>.
+                    <b>When we ask for gaps to be filled, we ask for one word</b> - you can have several words grouped with an underscore like so: <code>word_one_and_two are class as one</code>
                 </li>
             </ol>
+            All of the noise words: <code>and, if, so, or, this, is, that, are, what, a, its, as, it, to, by, of, there, they, does, an, like, who, when, why</code>
+            <br /><br />
+            <b>WARNING:</b> This means that the characters <code>+, -, _</code> cannot be used normally! For example <code>thing - something to explain further</code> would no longer work!
         </section>
     </body>
     <script>
