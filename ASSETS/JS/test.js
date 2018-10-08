@@ -252,6 +252,7 @@ function nextQuestion() {
     main.appendChild(next.dom);
     const input = next.dom.querySelector('input');
     if (input != null) input.focus()
+    else document.activeElement.blur();
     
     main.scrollTop = main.scrollHeight;
 
