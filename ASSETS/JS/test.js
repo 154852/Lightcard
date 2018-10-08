@@ -137,6 +137,7 @@ const questionTypes = [
         const div = document.createElement('div');
         div.classList.add('q-fb');
         div.innerHTML = side1.replaceAll(/\+|-/, '').replaceAll('_', ' ').replace(word, '<input type="text" class="fb-blank" />') + (card.type != 2? ' : ' + side2.replaceAll(/\+|-/, '').replaceAll('_', ' '):'');
+        if (div.children[0] == null) return null;
         div.children[0].setAttribute('style', 'width: ' + (word.length + 1) + 'ch');
 
         return question(div, function() {
@@ -194,16 +195,23 @@ function question(domElement, correctCallback, fixCallback) {
 const buffer = [];
 var used = [];
 for (var i = 0; i < testData.questions; i++) {
-    if (used.length == deck.cards.length) used = [];
-
     const type = chooseRand(questionTypes);
+
     const card = randomCard(type.types, used);
+    if (card == null) {
+        i -= 1;
+        used = [];
+        continue;
+    }
+
+    console.log(card)
 
     const question = type.generateQuestion(card);
     if (question == null) {
         i -= 1;
         continue;
     }
+
     used.push(card);
     question.domElement.classList.add('main');
 
