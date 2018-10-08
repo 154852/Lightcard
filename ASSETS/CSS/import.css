@@ -1,0 +1,23 @@
+.import-display {
+    margin: 0 5%;
+    position: relative;
+
+    width: 90%;
+    height: 100%;
+}
+
+.import-display section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.import-display a {
+    color: #1F618D;
+}
+
+#name {
+    text-align: center;
+}

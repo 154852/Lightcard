@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Lightcard | Edit</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" media="screen" href="ASSETS/CSS/global.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="ASSETS/CSS/edit.css" />
+        <script src="ASSETS/JS/app.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="create.html"><p>Create</p></a>
+            <a href="index.html"><h1>Lightcard</h1></a>
+            <a href="import.html"><p>Import</p></a>
+        </header>
+        <section class="create-display">
+            <h1 contenteditable="true" name="title" class="editable">Your Title</h1>
+
+            <p contenteditable="true" name="desc" class="editable center-text">Put a summary of the deck here - something that just tells your audience what they can expect</p>
+
+            <div id="edit-wrapper"></div>
+
+            <div class="eq-grid" style="margin-bottom: 1em">
+                <div class="block-button button danger-button" id="delete-deck-button">Delete Deck</div>
+                <div class="block-button button" id="add-button" style="width: 80%">Add Card</div>
+                <div class="block-button button" id="clone-deck-button">Clone deck</div>
+            </div>
+        </section>
+
+        <section id="create-card" class="center-full" style="display: none">
+            <h2 class="center-text" style="margin-top: 0;">Create card</h2>
+            <div class="choose" id="type" extra="#choose-data">
+                <p extra="This card will only have the front shown when revising, you will then answer the question and we will see if it matches the other side.">Question and Answer</p>
+                <p class="selected" extra="Either the front or back could be shown to you, you will just have to recall what is on the other side">Front and Back</p>
+                <p extra="This card will be one-sided, they will have no back and no 'answer' as such - good for things like quotes.">Single side cards</p>
+            </div>
+            <p id="choose-data" class="extra center-text"></p>
+            <h3>First side:</h3>
+            <input type="text" name="side1" />
+            <div id="second-side">
+                <h3>Second side:</h3>
+                <input type="text" name="side2" />
+            </div>
+
+            <br />
+            <div class="eq-grid">
+                <div class="block-button button danger-button" id="delete-button">Delete</div>    
+                <div class="block-button button" id="save-button" style="width: 80%">Close</div>
+                <div class="block-button button" id="clone-button">Clone</div>
+            </div>
+
+            <h3 class="center-text">How to make you card work well with our markdown-ish thing:</h3>
+            <ol>
+                <li>
+                    <b>What is really important and <em>must</em> be exactly (minus capitalisation) as in the given answer</b> can be marked like <code>*<em>something</em>*</code>. This means that if you were to say that <code>*Uno*</code> matches <code>*One*</code> then <code>uno = one, UnO = ONe, Uno != ones, auno != one</code>
+                </li>
+                <br />
+                <li>
+                    <b>Numbers that can be written as a string or as a number</b> can be expressed as <code>-something-</code> for example if <code>Uno</code> is <code>*1*</code> then <code>uno = one, uno = 1, uno != 2, uno != two</code>
+                </li>
+                <br />
+                <li>
+                    <b>Several things that could be included for it to be correct</b> are shown with <code>[thing1, thing2, thing3]</code> for example if <code>A unit for distance</code> is <code>[cm,m,km,miles,centimetres,metres,mm,milimeters,kilometres]</code> then <code>A unit for distance = cm, A unit for distance = metres, A unit for distance != nothing</code>
+                </li>
+                <br />
+                <li>
+                    <b>Things that are not that important</b> can donoted as <code>^something^</code>, for example if <code>Who is existent</code> is <code>^the^ government</code> then <code>Who is existent = the government, Who is existent = government, Who is existent != the, Who is existent != anything else</code>
+                </li>
+                <br />
+                <li>
+                    <b>Several things that <em>have</em> to be there</b> are shown as <code>{thing1, thing2, thing3}</code>, for example if <code>What are humans</code> is <code>{mammal, species, intelligent}</code> then <code>What are humans = An intelligent species of the mammal family, What are humans != mammals, What are humans != A mammal species</code>
+                </li>
+                <br />
+                <li>
+                    <b>You can also use several at once!</b> For example you could write <code>[{-1-, cm}, {-1000-, mm}]</code>.
+                </li>
+            </ol>
+        </section>
+    </body>
+    <script>
+        function getParameterByName(name) {
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(window.location.href);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        window.deck = APP.loadAllDecks()[parseInt(getParameterByName('i'))];
+    </script>
+    <script src="ASSETS/JS/edit.js"></script>
+</html>

@@ -1,0 +1,17 @@
+.create-display {
+    margin: 0 5%;
+}
+
+#create-card {
+    width: 80%;
+
+    box-shadow: 1px 1px 5px 1px lightgray;
+    border-radius: 1em;
+
+    background-color: white;
+
+    padding: 3%;
+
+    max-height: 80%;
+    overflow: scroll;
+}

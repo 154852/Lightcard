@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Lightcard | Create</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" media="screen" href="ASSETS/CSS/global.css" />
+        <link rel="stylesheet" type="text/css" media="screen" href="ASSETS/CSS/deck.css" />
+        <script src="ASSETS/JS/app.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="create.html"><p>Create</p></a>
+            <a href="index.html"><h1>Lightcard</h1></a>
+            <a href="import.html"><p>Import</p></a>
+        </header>
+        <section id="main-display">
+            <h1 name="title">Your Title</h1>
+
+            <p name="desc" class="center-text">Put a summary of the deck here - something that just tells your audience what they can expect</p>
+
+            <div class="block-button button" id="set-test">Set Test</div>
+            <br />
+
+            <div id="preview-wrapper"></div>
+
+            <div class="block-button button" id="edit-button" onclick="window.open('edit.html?i=' + deck.id, '_self')">Edit Deck</div>
+        </section>
+        <section id="test-params" style="display: none;" class="center-full">
+            <h1 class="center-text" style="margin-top: 0;">Set Test</h1>
+
+            <div class="number" id="amount" min="1">
+                <p style="margin: 0;">Number of questions:</p>
+                <div class="number-button">-</div>
+                <div class="number-value">5</div>
+                <div class="number-button">+</div>
+            </div>
+
+            <div class="checkbox" id="timer">
+                <p style="margin: 0;">Enable timer:</p>
+                <div class="checkbox-button">X</div>
+            </div>
+
+            <div class="checkbox" id="giveAnswer">
+                <p style="margin: 0;">Report answer immediately:</p>
+                <div class="checkbox-button">X</div>
+            </div>
+
+            <br />
+            <div class="block-button button" id="start-button">Start</div>
+        </section>
+    </body>
+    <script src="ASSETS/JS/deck.js"></script>
+</html>
