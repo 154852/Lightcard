@@ -204,8 +204,6 @@ for (var i = 0; i < testData.questions; i++) {
         continue;
     }
 
-    console.log(card)
-
     const question = type.generateQuestion(card);
     if (question == null) {
         i -= 1;
