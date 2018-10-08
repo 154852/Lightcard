@@ -52,8 +52,9 @@ APP.genCodeForDeck = function(deck) {
     
     const cards = [];
     for (const card of deck.cards) {
+        cards.push(card.type);
         cards.push(card.a);
-        cards.push(card.b);
+        if (card.type != 2) cards.push(card.b);
     }
 
     deck.cards = cards;
@@ -69,7 +70,12 @@ APP.importJSON = function(json) {
     const cards = [];
 
     for (var i = 0; i < json.cards.length; i += 2) {
-        cards.push(APP.createCard(json.cards[i], json.cards[i + 1]));
+        const card = APP.createCard(json.cards[i], json.cards[i + 1], '');
+        if (json.cards[i] != 2) {
+            card.b = json.cards[i + 2];
+            i += 1;
+        }
+        cards.push(card);
     }
 
     json.cards = cards;
