@@ -47,3 +47,13 @@ document.getElementById('json-button').addEventListener('click', function() {
         alert('Sorry! The json you gave us is corrupt!');
     }
 });
+
+document.getElementById('quizlet-button').addEventListener('click', function() {
+    try {
+        load(APP.importAsCSV(document.getElementsByName('quizlet')[0].value, ';', ',', function(row) {
+            return APP.createCard(1, row[0], row[1]);
+        }));
+    } catch {
+        alert('Sorry! You must have pasted this wrong!');
+    }
+});

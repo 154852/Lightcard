@@ -68,6 +68,18 @@ APP.import = function(code) {
     return APP.importJSON(JSON.parse(code));
 }
 
+APP.importAsCSV = function(string, rowSplit, termSplit, callback) {
+    const rows = string.split(rowSplit);
+    const deck = APP.createDeck('Quizlet Import', [], 'Quizlet Import');
+
+    for (const row of rows) {
+        if (row.trim() == '') continue;
+        deck.cards.push(callback(row.split(termSplit)));
+    }
+
+    return deck;
+}
+
 APP.importJSON = function(json) {
     const cards = [];
 
