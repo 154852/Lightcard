@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Lightcard | Home</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" media="screen" href="ASSETS/CSS/global.css" />
+        <script src="ASSETS/JS/qrcode.min.js"></script>
+        <script src="ASSETS/JS/app.js"></script>
+    </head>
+    <body>
+        <header>
+            <a href="create.html"><p>Create</p></a>
+            <a href="index.html"><h1>Lightcard</h1></a>
+            <a href="import.html"><p>Import</p></a>
+        </header>
+        <h1 class="center-text">Imported Part!</h1>
+        <p class="center-text" style="margin: 0 5%">This works by taking bits of data and sticking them together at the end, this means that they have to be in the right order and there can be no errors. If something goes wrong then click <code>Reset</code>.</p>
+        <br /><br />
+
+        <div class="button block-button" id="next">I have now scanned all of the QR codes shown!</div>
+        <br />
+        <div class="button block-button" id="reset">Reset</div>
+    </body>
+
+    <script>
+        document.getElementById('reset').addEventListener('click', function() {
+            localStorage.importParts = '[]';
+            alert('Reset!')
+        })
+
+        if (localStorage.importParts == null) var parts = [];
+        else var parts = JSON.parse(localStorage.importParts);
+
+        if (parseInt(getParameterByName('i')) != parts.length) {
+            alert('Wrong order! This one has not been added to the collection as it did not come in this position, please can each code in the order they arrive.');
+            throw new Error('Wrong Order');
+        }
+
+        parts.push(getParameterByName('part'));
+        localStorage.importParts = JSON.stringify(parts);
+
+        document.getElementById('next').addEventListener('click', function() {
+            const full = JSON.parse(localStorage.importParts).join('');
+            localStorage.importParts = '[]';
+            window.open('import.html?code=' + full, '_self');
+        });
+    </script>
+</html>
