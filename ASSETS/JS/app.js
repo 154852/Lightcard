@@ -51,21 +51,35 @@ APP.createCard = function(type, a, b) {
 APP.genCodeForDeck = function(deck) {
     deck = JSON.parse(JSON.stringify(deck));
     deck.id = undefined;
+    deck.date = undefined;
     
     const cards = [];
     for (const card of deck.cards) {
         cards.push(card.type);
-        cards.push(card.a);
-        if (card.type != 2) cards.push(card.b);
+        cards.push(card.a.replaceAll(',', ''));
+        if (card.type != 2) cards.push(card.b.replaceAll(',', ''));
     }
 
     deck.cards = cards;
 
-    return encodeURIComponent(JSON.stringify(deck));
+    return exportJSON(deck);
 }
 
 APP.import = function(code) {
-    return APP.importJSON(JSON.parse(code));
+    const parts = code.split(',');
+
+    const deck = APP.createDeck(parts[0], [], parts[parts.length - 1]);
+    
+    for (var i = 1; i < parts.length - 1; i += 2) {
+        const card = APP.createCard(parseInt(parts[i]), parts[i + 1], '');
+        if (parts[i] != '2') {
+            card.b = parts[i + 2];
+            i += 1;
+        }
+        deck.cards.push(card);
+    }
+
+    return deck;
 }
 
 APP.importAsCSV = function(string, rowSplit, termSplit, callback) {
@@ -294,6 +308,20 @@ function getParameterByName(name) {
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+function exportJSON(json) {
+    var string = '';
+    for (const key in json) {
+        if (json[key] != null)
+            if (typeof json[key] == 'object') {
+                string += exportJSON(json[key]) + ',';
+            } else {
+                string += encodeURIComponent(json[key]) + ',';
+            }
+    }
+
+    return string.substring(0, string.length - 1);
 }
 
 
