@@ -10,7 +10,7 @@ for (var i = 0; i < code.length; i += (width * 2)) {
 		height : 5000
 	});
 	
-	const address = 'http://' + window.location.host + '/qr-import.html?i=' + (i / 1000) + '&part=' + code.substring(i, i + (width / 2));
+	const address = 'http://' + window.location.host + '/qr-import.html?i=' + (i / (width * 2)) + '&part=' + code.substring(i, i + (width / 2));
 	console.log(address);
 	qrcode.makeCode(address);
 

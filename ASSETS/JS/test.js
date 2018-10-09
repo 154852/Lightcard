@@ -97,8 +97,8 @@ const questionTypes = [
         const choose = div.querySelector('.choose');
         loadChoose(choose);
 
-        return question(div, function() {
-            return choose.getSelected().index == (answer? 0:1)
+        return question(div, function(element) {
+            return element.querySelector('.choose').getSelected().index == (answer? 0:1)
         }, function() {
             const actual = choose.children.item(answer? 0:1);
 
@@ -140,8 +140,8 @@ const questionTypes = [
         if (div.children[0] == null) return null;
         div.children[0].setAttribute('style', 'width: ' + (word.length + 1) + 'ch');
 
-        return question(div, function() {
-            return div.children[0].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').replaceAll(' ', '') == word.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').trim().replaceAll(' ', '');
+        return question(div, function(element) {
+            return element.children[0].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').replaceAll(' ', '') == word.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').trim().replaceAll(' ', '');
         }, function() {
             const p = document.createElement('p');
             p.innerHTML = 'Correct Answer: ' + word;
@@ -172,8 +172,8 @@ const questionTypes = [
         div.classList.add('q-a');
         div.innerHTML = '<p>' + side1.replaceAll(/\+|-/, '').replaceAll('_', ' ') + '</p><hr /><input type="text" placeholder="' + side2.charAt(0) + '_'.repeat(side2.length - 1) + '" />';
 
-        return question(div, function() {
-            return div.children[2].value.toLowerCase().replaceAll(/[^a-z^0-9]/, '') == side2.toLowerCase().replaceAll(/[^a-z^0-9]/, '');
+        return question(div, function(element) {
+            return element.children[2].value.toLowerCase().replaceAll(/[^a-z^0-9]/, '') == side2.toLowerCase().replaceAll(/[^a-z^0-9]/, '');
         }, function() {
             const p = document.createElement('p');
             p.innerHTML = 'Correct Answer: ' + side2;
@@ -192,7 +192,7 @@ function question(domElement, correctCallback, fixCallback) {
     }
 }
 
-const buffer = [];
+var buffer = [];
 var used = [];
 for (var i = 0; i < testData.questions; i++) {
     const type = chooseRand(questionTypes);
@@ -265,12 +265,18 @@ function nextQuestion() {
     const check = next.dom.querySelector('.button');
     check.addEventListener('click', function() {
         current += 1;
-        check.style.display = 'none';
 
         const isCorrect = next.question.correctCallback();
 
         if (isCorrect) correct += 1;
-    
+        else {
+            const clone = next.dom.cloneNode(true);
+            const input = clone.querySelector('input');
+            if (input != null) input.value = '';
+
+            buffer.splice(current, 0, {dom: clone, question: next.question});
+        }
+        check.style.display = 'none';
 
         if (testData.reportAnswer) {
             if (isCorrect) next.dom.classList.add('correct');
