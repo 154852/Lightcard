@@ -102,7 +102,7 @@ const questionTypes = [
         }, function() {
             const actual = choose.children.item(answer? 0:1);
 
-            actual.setAttribute('style', 'color: #4CAF50')
+            actual.setAttribute('style', 'color: #00CC33')
         });
     }),
     questionType('Fill in the gap', [0, 1, 2], function(card) {
