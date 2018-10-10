@@ -94,7 +94,8 @@ header {
 
 .q-fb {
     text-align: center;
-    padding: 1em 0;
+    /* padding: 1em 0; */
+    padding-top: 1em;
 }
 
 #end {
@@ -130,5 +131,13 @@ header {
 .q-a input {
     width: 60%;
     text-align: center;
-    margin-bottom: 1em;
+    margin-bottom: 0.5em;
+}
+
+.main > p:last-child {
+    margin: 0.6em 0;
+}
+
+.question > .button {
+    margin-top: 0.5em;
 }

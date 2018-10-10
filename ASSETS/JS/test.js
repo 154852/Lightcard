@@ -312,11 +312,12 @@ function nextQuestion() {
             if (isCorrect) next.dom.classList.add('correct');
             else {
                 next.dom.classList.add('incorrect');
-                next.question.fix();
 
                 if (current == 1 || next.card != buffer[current - 2].card)
                     buffer.splice(current, 0, genQuestionsForCards([next.card])[0]);
             }
+
+            next.question.fix();
 
             renderCanvas();
         }
