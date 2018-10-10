@@ -141,7 +141,13 @@ const questionTypes = [
         div.children[0].setAttribute('style', 'width: ' + (word.length + 1) + 'ch');
 
         return question(div, function() {
-            return div.children[0].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').replaceAll(' ', '') == word.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').trim().replaceAll(' ', '');
+            // return div.children[0].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').replaceAll(' ', '') == word.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').trim().replaceAll(' ', '');
+            console.log(div);
+
+            const fuzzySet = new FuzzySet([word.trim().toLowerCase().replaceAll(/[^a-z^0-9]/, '')]);
+            const match = fuzzySet.get(div.children[0].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ''));
+
+            return match != null && match[0][0] >= 0.7;
         }, function() {
             const p = document.createElement('p');
             p.innerHTML = 'Correct Answer: ' + word;
@@ -173,7 +179,9 @@ const questionTypes = [
         div.innerHTML = '<p>' + side1.replaceAll(/\+|-/, '').replaceAll('_', ' ') + '</p><hr /><input type="text" placeholder="' + side2.charAt(0) + '_'.repeat(side2.length - 1) + '" />';
 
         return question(div, function() {
-            return div.children[2].value.toLowerCase().replaceAll(/[^a-z^0-9]/, '') == side2.toLowerCase().replaceAll(/[^a-z^0-9]/, '');
+            const fuzzySet = new FuzzySet([side2.toLowerCase().replaceAll(/[^a-z^0-9]/, '')]);
+
+            return fuzzySet.get(div.children[2].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ''))[0][0] >= 0.7;
         }, function() {
             const p = document.createElement('p');
             p.innerHTML = 'Correct Answer: ' + side2;
