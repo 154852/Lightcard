@@ -144,7 +144,7 @@ const questionTypes = [
             const fuzzySet = new FuzzySet([word.trim().toLowerCase().replaceAll(/[^a-z^0-9]/, '')]);
             const match = fuzzySet.get(div.children[0].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ''));
 
-            return match != null && match[0][0] >= 0.7;
+            return match != null && match[0][0] >= 0.8;
         }, function() {
             const p = document.createElement('p');
             p.innerHTML = 'Correct Answer: ' + word;
@@ -179,7 +179,7 @@ const questionTypes = [
             const fuzzySet = new FuzzySet([side2.toLowerCase().replaceAll(/[^a-z^0-9]/, '')]);
             const match = fuzzySet.get(div.children[2].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ''));
 
-            return match != null && match[0][0] >= 0.7;
+            return match != null && match[0][0] >= 0.8;
         }, function() {
             const p = document.createElement('p');
             p.innerHTML = 'Correct Answer: ' + side2;
