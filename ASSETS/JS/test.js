@@ -198,14 +198,15 @@ function question(domElement, correctCallback, fixCallback) {
     }
 }
 
-function genQuestionsForCards(cards) {
+function genQuestionsForCards(cards, index) {
     cards = cards.slice();
     shuffle(cards);
 
     types = questionTypes.slice();
 
     const questions = [];
-    for (const card of cards) {
+    for (var i = 0; i < cards.length; i++) {
+        const card = cards[i];
         shuffle(types);
 
         for (const type of types) {
@@ -216,7 +217,7 @@ function genQuestionsForCards(cards) {
 
                 const div = document.createElement('div');
                 div.classList.add('question');
-                div.innerHTML = '<div class="data"><div class="id">' + (i + 1) + '.</div><div class="type">' + type.name + '</div></div></div><div class="button block-button" style="margin-bottom: 0.5em; width: 90%">Check</div>';
+                div.innerHTML = '<div class="data"><div class="id">' + (i + index + 1) + ' - Redo</div><div class="type">' + type.name + '</div></div></div><div class="button block-button" style="margin-bottom: 0.5em; width: 90%">Check</div>';
                 div.insertBefore(question.domElement, div.querySelector('.button'));
 
                 questions.push({dom: div, question: question, card: card});
@@ -313,8 +314,9 @@ function nextQuestion() {
             else {
                 next.dom.classList.add('incorrect');
 
-                if (current == 1 || next.card != buffer[current - 2].card)
-                    buffer.splice(current, 0, genQuestionsForCards([next.card])[0]);
+                if (current == 1 || next.card != buffer[current - 2].card) {
+                    buffer.splice(current, 0, genQuestionsForCards([next.card], current)[0]);
+                }
             }
 
             next.question.fix();
