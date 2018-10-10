@@ -97,8 +97,8 @@ const questionTypes = [
         const choose = div.querySelector('.choose');
         loadChoose(choose);
 
-        return question(div, function(element) {
-            return element.querySelector('.choose').getSelected().index == (answer? 0:1)
+        return question(div, function() {
+            return choose.getSelected().index == (answer? 0:1)
         }, function() {
             const actual = choose.children.item(answer? 0:1);
 
@@ -140,8 +140,8 @@ const questionTypes = [
         if (div.children[0] == null) return null;
         div.children[0].setAttribute('style', 'width: ' + (word.length + 1) + 'ch');
 
-        return question(div, function(element) {
-            return element.children[0].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').replaceAll(' ', '') == word.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').trim().replaceAll(' ', '');
+        return question(div, function() {
+            return div.children[0].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').replaceAll(' ', '') == word.toLowerCase().replaceAll(/[^a-z^0-9]/, ' ').trim().replaceAll(' ', '');
         }, function() {
             const p = document.createElement('p');
             p.innerHTML = 'Correct Answer: ' + word;
@@ -172,8 +172,8 @@ const questionTypes = [
         div.classList.add('q-a');
         div.innerHTML = '<p>' + side1.replaceAll(/\+|-/, '').replaceAll('_', ' ') + '</p><hr /><input type="text" placeholder="' + side2.charAt(0) + '_'.repeat(side2.length - 1) + '" />';
 
-        return question(div, function(element) {
-            return element.children[2].value.toLowerCase().replaceAll(/[^a-z^0-9]/, '') == side2.toLowerCase().replaceAll(/[^a-z^0-9]/, '');
+        return question(div, function() {
+            return div.children[2].value.toLowerCase().replaceAll(/[^a-z^0-9]/, '') == side2.toLowerCase().replaceAll(/[^a-z^0-9]/, '');
         }, function() {
             const p = document.createElement('p');
             p.innerHTML = 'Correct Answer: ' + side2;
@@ -190,6 +190,37 @@ function question(domElement, correctCallback, fixCallback) {
         correctCallback: correctCallback,
         fix: fixCallback
     }
+}
+
+function genQuestionsForCards(cards) {
+    cards = cards.slice();
+    shuffle(cards);
+
+    types = questionTypes.slice();
+
+    const questions = [];
+    for (const card of cards) {
+        shuffle(types);
+
+        for (const type of types) {
+            if (type.types.indexOf(card.type) != -1) {
+                const question = type.generateQuestion(card);
+
+                question.domElement.classList.add('main');
+
+                const div = document.createElement('div');
+                div.classList.add('question');
+                div.innerHTML = '<div class="data"><div class="id">' + (i + 1) + '.</div><div class="type">' + type.name + '</div></div></div><div class="button block-button" style="margin-bottom: 0.5em; width: 90%">Check</div>';
+                div.insertBefore(question.domElement, div.querySelector('.button'));
+
+                questions.push({dom: div, question: question, card: card});
+
+                break;
+            }
+        }
+    }
+
+    return questions;
 }
 
 var buffer = [];
@@ -218,7 +249,7 @@ for (var i = 0; i < testData.questions; i++) {
     div.innerHTML = '<div class="data"><div class="id">' + (i + 1) + '.</div><div class="type">' + type.name + '</div></div></div><div class="button block-button" style="margin-bottom: 0.5em; width: 90%">Check</div>';
     div.insertBefore(question.domElement, div.querySelector('.button'));
 
-    buffer.push({dom: div, question: question});
+    buffer.push({dom: div, question: question, card: card});
 }
 
 fillData('questions', testData.questions);
@@ -269,13 +300,6 @@ function nextQuestion() {
         const isCorrect = next.question.correctCallback();
 
         if (isCorrect) correct += 1;
-        else {
-            const clone = next.dom.cloneNode(true);
-            const input = clone.querySelector('input');
-            if (input != null) input.value = '';
-
-            buffer.splice(current, 0, {dom: clone, question: next.question});
-        }
         check.style.display = 'none';
 
         if (testData.reportAnswer) {
@@ -283,6 +307,9 @@ function nextQuestion() {
             else {
                 next.dom.classList.add('incorrect');
                 next.question.fix();
+
+                if (current == 1 || next.card != buffer[current - 2].card)
+                    buffer.splice(current, 0, genQuestionsForCards([next.card])[0]);
             }
 
             renderCanvas();
