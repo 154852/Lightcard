@@ -217,7 +217,7 @@ function genQuestionsForCards(cards, index) {
 
                 const div = document.createElement('div');
                 div.classList.add('question');
-                div.innerHTML = '<div class="data"><div class="id">' + (i + index + 1) + ' - Redo</div><div class="type">' + type.name + '</div></div></div><div class="button block-button" style="margin-bottom: 0.5em; width: 90%">Check</div>';
+                div.innerHTML = '<div class="data"><div class="id">' + (i + index + 1) + '.5</div><div class="type">' + type.name + '</div></div></div><div class="button block-button" style="margin-bottom: 0.5em; width: 90%">Check</div>';
                 div.insertBefore(question.domElement, div.querySelector('.button'));
 
                 questions.push({dom: div, question: question, card: card});
