@@ -20,6 +20,9 @@ document.getElementById('set-test').addEventListener('click', function() {
     const number = document.getElementById('amount');
     loadNumber(number);
 
+    const sensitivity = document.getElementById('sensitivity');
+    loadNumber(sensitivity);
+
     const timer = document.getElementById('timer');
     loadCheckbox(timer);
 
@@ -27,7 +30,7 @@ document.getElementById('set-test').addEventListener('click', function() {
     loadCheckbox(reportAnswer);
 
     document.getElementById('start-button').addEventListener('click', function() {
-        var address = 'qs=' + number.getValue() + '&t=' + timer.getValue() + '&ra=' + reportAnswer.getValue() + '&i=' + deck.id;
+        var address = 'qs=' + number.getValue() + '&t=' + timer.getValue() + '&ra=' + reportAnswer.getValue() + '&s=' + (sensitivity.getValue() / 10) + '&i=' + deck.id;
 
         window.open('test.html?' + address, '_self');
     });

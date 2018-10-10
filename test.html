@@ -19,10 +19,14 @@
         </header>
         <section id="viewport">
             <div id="left-side" class="center-text">
-                <p id="time">Time: <span class="fill-time">00:00</span></p>
+                <div id="time">
+                    <p><b>Time:</b> <span class="fill-time">00:00</span></p>
+                    <p><b>Average Time:</b> <span class="fill-avg-time">00:00</span></p>
+                </div>
+                
 
                 <div id="ra">
-                    <p>Stats:</p>
+                    <p><b>Stats:</b></p>
                     <canvas id="stats-canvas" width="500" height="500"></canvas>
                     
                     <table style="width: 90%; margin: 0 auto">
@@ -36,7 +40,7 @@
                         </tr>
                     </table>
 
-                    <p>Completed: <span class="fill-completed">0</span> / <span class="fill-questions"></span> - (<span class="fill-completed-percent"></span>0%)</p>
+                    <p><b>Completed:</b> <span class="fill-completed">0</span> / <span class="fill-questions"></span> - (<span class="fill-completed-percent"></span>0%)</p>
                 </div>
                 
                 <div style="position: absolute; bottom: 0; width: 100%">
@@ -65,19 +69,6 @@
                     </table>
                 </div>
 
-                <!-- <div class="question">
-                    <div class="data">
-                        <div class="id">1.</div>
-                        <div class="type">What was on the other side?</div>
-                    </div>
-                    <div class="q-a main">
-                        <p>Some text</p>
-                        <hr />
-                        <input type="text" placeholder="???" />
-                    </div>
-                    <div class="button block-button" style="margin-bottom: 0.5em; width: 90%">Check</div>
-                </div> -->
-
                 <section id="end" style="display: none;" class="center-full fixed">
                     <h1 class="center-text">Your Results:</h1>
 
@@ -88,6 +79,14 @@
                             </td>
                             <td>
                                 <b class="fill-time"></b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Average Question Time:
+                            </td>
+                            <td>
+                                <b><span class="fill-avg-time"></span></b>
                             </td>
                         </tr>
                         <tr>

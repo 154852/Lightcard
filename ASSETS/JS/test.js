@@ -1,4 +1,6 @@
 const deck = APP.loadAllDecks()[parseInt(getParameterByName('i'))];
+const sensitivity = parseFloat(getParameterByName('s'));
+
 const testData = {
     questions: parseInt(getParameterByName('qs')),
     timer: getParameterByName('t') == 'true',
@@ -144,7 +146,7 @@ const questionTypes = [
             const fuzzySet = new FuzzySet([word.trim().toLowerCase().replaceAll(/[^a-z^0-9]/, '')]);
             const match = fuzzySet.get(div.children[0].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ''));
 
-            return match != null && match[0][0] >= 0.8;
+            return match != null && match[0][0] >= sensitivity;
         }, function() {
             const p = document.createElement('p');
             p.innerHTML = 'Correct Answer: ' + word;
@@ -173,13 +175,13 @@ const questionTypes = [
 
         const div = document.createElement('div');
         div.classList.add('q-a');
-        div.innerHTML = '<p>' + side1.replaceAll(/\+|-/, '').replaceAll('_', ' ') + '</p><hr /><input type="text" placeholder="' + side2.charAt(0) + '_'.repeat(side2.length - 1) + '" />';
+        div.innerHTML = '<p>' + side1.replaceAll(/\+|-/, '').replaceAll('_', ' ') + '</p><hr /><input type="text" placeholder="' + side2.charAt(0) + ' _'.repeat(side2.length - 1) + '" />';
 
         return question(div, function() {
             const fuzzySet = new FuzzySet([side2.toLowerCase().replaceAll(/[^a-z^0-9]/, '')]);
             const match = fuzzySet.get(div.children[2].value.toLowerCase().replaceAll(/[^a-z^0-9]/, ''));
 
-            return match != null && match[0][0] >= 0.8;
+            return match != null && match[0][0] >= sensitivity;
         }, function() {
             const p = document.createElement('p');
             p.innerHTML = 'Correct Answer: ' + side2;
@@ -333,7 +335,7 @@ function nextQuestion() {
         fillData('completed', current);
         fillData('completed-percent', Math.round((current / testData.questions) * 10000) / 1000);
 
-        if (current != testData.questions) requestAnimationFrame(nextQuestion);
+        if (current != buffer.length) requestAnimationFrame(nextQuestion);
         else finish();
     });
 }
@@ -349,10 +351,15 @@ if (!testData.reportAnswer) {
 
 var shouldUpdate = true;
 function timeUpdate() {
-    const date = new Date(new Date().getTime() - startTime);
+    var date = new Date(new Date().getTime() - startTime);
     fillData('time', date.getMinutes().twoDigitString() + ':' + date.getSeconds().twoDigitString());
 
-    if (shouldUpdate) requestAnimationFrame(timeUpdate);
+    if (shouldUpdate) {
+        date = new Date(Math.ceil(date.getTime() / (current + 1)));
+        fillData('avg-time', date.getMinutes().twoDigitString() + ':' + date.getSeconds().twoDigitString());
+
+        setTimeout(timeUpdate, 50);
+    }
 }
 
 function start() {
