@@ -4,7 +4,7 @@ const width = Math.min(window.innerWidth, window.innerHeight - document.querySel
 
 const deck = APP.loadAllDecks()[parseInt(getParameterByName('i'))];
 const code = decodeURIComponent(APP.genCodeForDeck(deck));
-const size = width * 1.5;
+const size = width * 1.4;
 
 for (var i = 0; i < code.length; i += size) {
 	const qrcode = new QRCode(main, {
