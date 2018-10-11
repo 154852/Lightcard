@@ -42,7 +42,7 @@ document.getElementById('encoded-button').addEventListener('click', function() {
 
 document.getElementById('json-button').addEventListener('click', function() {
     try {
-        load(APP.import(JSON.stringify(document.getElementsByName('json')[0].value)));
+        load(APP.check(JSON.parse(document.getElementsByName('json')[0].value)));
     } catch {
         alert('Sorry! The json you gave us is corrupt!');
     }

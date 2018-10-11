@@ -97,6 +97,24 @@ APP.importAsCSV = function(string, rowSplit, termSplit, callback) {
     return deck;
 }
 
+APP.check = function(json) {
+    var keys = Object.getOwnPropertyNames(json);
+
+    if (keys.length != 3) throw new Error('Invalid deck!');
+    if (keys.indexOf('name') == -1 || keys.indexOf('cards') == -1 || keys.indexOf('description') == -1) throw new Error('Invalid deck!');
+    if (json.name.constructor.name != 'String' || json.cards.constructor.name != 'Array' || json.description.constructor.name != 'String') throw new Error('Invalid deck!');
+
+    for (const card of json.cards) {
+        keys = Object.getOwnPropertyNames(card);
+
+        if (keys.length != 3) throw new Error('Invalid deck! - Card');
+        if (keys.indexOf('a') == -1 || keys.indexOf('type') == -1 || (keys.types != 2 && keys.indexOf('b') == -1)) throw new Error('Invalid deck! - Card');
+        if (card.a.constructor.name != 'String' || (keys.types != 2 && card.b.constructor.name != 'String') || typeof card.type != 'number') throw new Error('Invalid deck! - Card');
+    }
+
+    return json;
+}
+
 APP.importJSON = function(json) {
     const cards = [];
 
