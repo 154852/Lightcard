@@ -52,6 +52,9 @@ APP.genCodeForDeck = function(deck) {
     deck = JSON.parse(JSON.stringify(deck));
     deck.id = undefined;
     deck.date = undefined;
+
+    deck.name = deck.name.replaceAll(',', '');
+    deck.description = deck.description.replaceAll(',', '');
     
     const cards = [];
     for (const card of deck.cards) {
@@ -324,6 +327,12 @@ function exportJSON(json) {
     return string.substring(0, string.length - 1);
 }
 
+function cloneArray(start) {
+    const array = [];
+    for (const card of start) array.push(card);
+
+    return array;
+}
 
 String.prototype.isOneWord = function() {
     return this.trim().split(' ').length == 1;
