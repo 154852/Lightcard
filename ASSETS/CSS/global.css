@@ -65,8 +65,8 @@ input[type="text"], .editable {
     border: solid white 1px;
     border-bottom: solid rgb(196, 229, 255) 1px;
 
-    transition: 0.5s;
-    -webkit-transition: 0.5s;
+    transition: border 0.5s;
+    -webkit-transition: border 0.5s;
 
     padding-bottom: 0.5em;
 	

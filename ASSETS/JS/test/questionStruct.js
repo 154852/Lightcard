@@ -24,6 +24,7 @@ QuestionType.randomCard = function(types, exclude, cards) {
 }
 
 QuestionType.array = [];
+QuestionType.sensitivity = 0.8;
 
 class Question {
     constructor(domElement, answer, isCorrect, correctError) {
@@ -35,10 +36,10 @@ class Question {
     }
 
     isCorrect() {
-        this.isCorrectCallback.call(this);
+        return this.isCorrectCallback.call(this);
     }
 
     correctError() {
-        this.correctErrorCallback.call(this);
+        return this.correctErrorCallback.call(this);
     }
 }

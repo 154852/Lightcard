@@ -10,6 +10,10 @@
         <link rel="stylesheet" type="text/css" media="screen" href="ASSETS/CSS/test.css" />
         <script src="ASSETS/JS/app.js"></script>
         <script src="ASSETS/JS/fuzzyset.js"></script>
+
+        <script src="ASSETS/JS/test/questionStruct.js"></script>
+        <script src="ASSETS/JS/test/questions.js"></script>
+        <script src="ASSETS/JS/test/test.js"></script>
     </head>
     <body>
         <header>
@@ -44,7 +48,7 @@
                 </div>
                 
                 <div style="position: absolute; bottom: 0; width: 100%">
-                    <div class="block-button button" style="width: 60%" onclick="javascript:window.open('deck.html?i=' + deck.id, '_self')">Exit Test</div>
+                    <div class="block-button button" style="width: 60%" onclick="javascript:window.open('deck.html?i=' + i, '_self')">Exit Test</div>
                     <br />
                     <div class="block-button button" style="width: 60%" onclick="window.location.reload()">New Test</div>
                     <br />
@@ -68,49 +72,64 @@
                         </tr>
                     </table>
                 </div>
-
-                <section id="end" style="display: none;" class="center-full fixed">
-                    <h1 class="center-text">Your Results:</h1>
-
-                    <table class="two-part-table">
-                        <tr>
-                            <td>
-                                Total Time:
-                            </td>
-                            <td>
-                                <b class="fill-time"></b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Average Question Time:
-                            </td>
-                            <td>
-                                <b><span class="fill-avg-time"></span></b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Score:
-                            </td>
-                            <td>
-                                <b class="fill-score"></b> / <span class="fill-questions"></span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                Percentage:
-                            </td>
-                            <td>
-                                <b><span class="fill-correct"></span>%</b>
-                            </td>
-                        </tr>
-                    </table>
-
-                    <div class="button block-button" onclick="window.location.reload()">Start Again</div>
-                </section>
             </div>
+
+            <section id="end" style="display: none;" class="center-full fixed">
+                <h1 class="center-text">Your Results:</h1>
+
+                <table class="two-part-table">
+                    <tr>
+                        <td>
+                            Total Time:
+                        </td>
+                        <td>
+                            <b class="fill-time"></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Average Question Time:
+                        </td>
+                        <td>
+                            <b><span class="fill-avg-time"></span></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Score:
+                        </td>
+                        <td>
+                            <b class="fill-score"></b> / <span class="fill-questions"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Percentage:
+                        </td>
+                        <td>
+                            <b><span class="fill-correct"></span>%</b>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="button block-button" onclick="window.location.reload()">Start Again</div>
+            </section>
         </section>
     </body>
-    <script src="ASSETS/JS/test.js"></script>
+
+    <script>
+        const i = getParameterByName('i');
+        
+        const testHandler = new TestHandler(
+            APP.loadAllDecks()[parseInt(i)].cards,
+            getParameterByName('t') == 'true',
+            getParameterByName('ra') == 'true',
+            parseInt(getParameterByName('qs'))
+        );
+
+        QuestionType.sensitivity = parseFloat(getParameterByName('s'));
+
+        testHandler.init();
+        testHandler.start();
+    </script>
 </html>

@@ -306,8 +306,8 @@ function loadCheckbox(element) {
     });
 }
 
-function fillData(name, value) {
-    const items = document.querySelectorAll('.fill-' + name);
+function fillData(name, value, element) {
+    const items = (element != null? element:document).querySelectorAll('.fill-' + name);
 
     for (const item of items) {
         item.innerHTML = value;
@@ -369,3 +369,11 @@ Number.prototype.twoDigitString = function() {
 Number.prototype.mod = function(n) {
 	return ((this % n) + n) % n;
 };
+
+NodeList.prototype.last = function() {
+    return this.item(this.length - 1);
+}
+
+Array.prototype.last = function() {
+    return this[this.length - 1];
+}
