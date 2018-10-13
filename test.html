@@ -118,13 +118,17 @@
     </body>
 
     <script>
-        const i = getParameterByName('i');
+        const deck = APP.loadAllDecks()[parseInt(getParameterByName('i'))];
         
         const testHandler = new TestHandler(
-            APP.loadAllDecks()[parseInt(i)].cards,
+            deck.cards,
             getParameterByName('t') == 'true',
             getParameterByName('ra') == 'true',
-            parseInt(getParameterByName('qs'))
+            parseInt(getParameterByName('qs')),
+            function() {
+                console.log(deck.cards);
+                APP.saveDeck(deck);
+            }
         );
 
         QuestionType.sensitivity = parseFloat(getParameterByName('s'));

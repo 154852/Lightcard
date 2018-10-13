@@ -32,6 +32,6 @@ document.getElementById('set-test').addEventListener('click', function() {
     document.getElementById('start-button').addEventListener('click', function() {
         var address = 'qs=' + number.getValue() + '&t=' + timer.getValue() + '&ra=' + reportAnswer.getValue() + '&s=' + (sensitivity.getValue() / 10) + '&i=' + deck.id;
 
-        window.open('test.html?' + address, '_self');
+        window.open('test.html?' + address);
     });
 });

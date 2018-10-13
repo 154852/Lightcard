@@ -45,7 +45,22 @@ APP.createDeck = function(name, cards, description) {
 }
 
 APP.createCard = function(type, a, b) {
-    return {a: a, b: b, type: type};
+    return {a: a, b: b, type: type, lastRevised: 0};
+}
+
+APP.orderByDate = function(cards) {
+    const newArray = cloneArray(cards);
+    if (cards[0].lastRevised == null) {
+        for (const card of newArray) {
+            card.lastRevised = 0;
+        }
+    } else {
+        newArray.sort(function(a, b) {
+            return a.lastRevised - b.lastRevised;
+        });
+    }
+
+    return newArray;
 }
 
 APP.genCodeForDeck = function(deck) {

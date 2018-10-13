@@ -22,7 +22,7 @@ QuestionGenerated.createQuestion = function(card, type, questionIndex, cards) {
 }
 
 class TestHandler {
-    constructor(cards, timer, reportAnswer, length) {
+    constructor(cards, timer, reportAnswer, length, saveCallback) {
         this.cards = cards;
         this.timer = timer;
         this.reportAnswer = reportAnswer;
@@ -37,6 +37,8 @@ class TestHandler {
         this.shouldEnd = false;
         this.startTime = 0;
         this.timerElement = document.getElementById('time');
+
+        this.saveCallback = saveCallback;
     }
 
     init() {
@@ -123,6 +125,7 @@ class TestHandler {
                 this.cards
             );
             this.usedCards.push(next.card);
+            // APP.setRevised(next.card);
         }
         this.pastQuestions.push(next);
 
@@ -142,6 +145,11 @@ class TestHandler {
 
             const isCorrect = next.question.isCorrect();
             if (isCorrect) self.correct.push(next);
+
+            if (self.saveCallback != null) {
+                next.card.lastRevised = new Date().getTime();
+                self.saveCallback();
+            }
             
             var toFollow = null;
             if (self.reportAnswer) {

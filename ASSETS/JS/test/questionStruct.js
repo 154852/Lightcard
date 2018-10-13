@@ -13,8 +13,12 @@ class QuestionType {
 }
 
 QuestionType.randomCard = function(types, exclude, cards) {
-    const cardsJumbled = cloneArray(cards);
-    shuffle(cardsJumbled);
+    const cardsJumbled = APP.orderByDate(cards);
+    for (var i = 0; i < cardsJumbled.length; i++) {
+        const card = cardsJumbled[i];
+        cardsJumbled.splice(i, 1);
+        cardsJumbled.splice(i + parseInt((Math.random() * 4) - 2), 0, card);
+    }
 
     for (const card of cardsJumbled) {
         if (types.indexOf(card.type) != -1 && exclude.indexOf(card) == -1) return card;
